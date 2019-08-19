@@ -40,7 +40,11 @@ def gravatar(email, size=48):
 def make_document_url(project, version=None, page=''):
     if not project:
         return ''
-    return resolve(project=project, version_slug=version, filename=page)
+
+    path = resolve(project=project, version_slug=version, filename=page)
+    if project.documentation_type in ('sphinx', 'mkdocs'):
+        path += '.html'
+    return path
 
 
 @register.filter(is_safe=True)
